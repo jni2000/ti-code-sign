@@ -72,13 +72,16 @@ HS_IMAGE_SIZE=$(cat $INPUT_FILE | wc -c)
 # Parameters to get populated into the x509 template
 HS_SED_OPTS="-e s/TEST_IMAGE_LENGTH/${HS_IMAGE_SIZE}/ "
 HS_SED_OPTS+="-e s/TEST_IMAGE_SHA_VAL/${HS_SHA_VALUE}/"
+TMPX509=$(mktemp) || exit 1
+cat ${PREFIX}/scripts/x509-template.txt | sed ${HS_SED_OPTS} > ${TMPX509}
 
 # Generate x509 certificate
-cat ${PREFIX}/scripts/x509-template.txt | sed ${HS_SED_OPTS} > temp-x509.txt
-openssl req -new -x509 -key ${PREFIX}/keys/custMpk.pem -nodes -outform DER -out temp-x509.cert -config temp-x509.txt -sha512
+TMPCERT=$(mktemp) || exit 1
+
+openssl req -new -x509 -key ${PREFIX}/keys/custMpk.pem -nodes -outform DER -out ${TMPCERT} -config ${TMPX509} -sha512
 
 # Append x509 certificate
-cat temp-x509.cert $INPUT_FILE > $OUTPUT_FILE
+cat ${TMPCERT} $INPUT_FILE > $OUTPUT_FILE
 
 # Cleanup
-rm -f temp-x509.txt temp-x509.cert
+rm -f ${TMPX509} ${TMPCERT}
