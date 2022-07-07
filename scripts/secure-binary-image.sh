@@ -44,7 +44,7 @@ function fn_display_usage {
 	exit 1
 }
 
-# check if M-shield-DK tool is installed
+# check where this tool is installed
 PREFIX=..
 CUSTOMERKEY=${PREFIX}/keys/custMpk.pem
 if [ ! -f ${CUSTOMERKEY} ]; then
@@ -69,9 +69,13 @@ OUTPUT_FILE=$2
 HS_SHA_VALUE=$(openssl dgst -sha512 -hex $INPUT_FILE | sed -e "s/^.*= //g")
 HS_IMAGE_SIZE=$(cat $INPUT_FILE | wc -c)
 
+# Get software revision info
+HS_SWRV=$(cat ${PREFIX}/keys/swrv.txt)
+
 # Parameters to get populated into the x509 template
 HS_SED_OPTS="-e s/TEST_IMAGE_LENGTH/${HS_IMAGE_SIZE}/ "
-HS_SED_OPTS+="-e s/TEST_IMAGE_SHA_VAL/${HS_SHA_VALUE}/"
+HS_SED_OPTS+="-e s/TEST_IMAGE_SHA_VAL/${HS_SHA_VALUE}/ "
+HS_SED_OPTS+="-e s/TEST_SWRV/${HS_SWRV}/ "
 TMPX509=$(mktemp) || exit 1
 cat ${PREFIX}/scripts/x509-template.txt | sed ${HS_SED_OPTS} > ${TMPX509}
 

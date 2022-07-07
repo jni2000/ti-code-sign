@@ -20,7 +20,7 @@ basicConstraints       = CA:true
 1.3.6.1.4.1.294.1.35   = ASN1:SEQUENCE:sysfw_image_load
 
 [ swrv ]
-swrv = INTEGER:0
+swrv = INTEGER:TEST_SWRV
 
 [ sysfw_image_integrity ]
 shaType                = OID:2.16.840.1.101.3.4.2.3
