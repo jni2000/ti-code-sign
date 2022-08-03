@@ -45,7 +45,7 @@ function fn_display_usage {
 }
 
 # check where this tool is installed
-PREFIX=..
+PREFIX=$(dirname $0)/..
 CUSTOMERKEY=${PREFIX}/keys/custMpk.pem
 if [ ! -f ${CUSTOMERKEY} ]; then
 	IFT=${TI_SECURE_DEV_PKG}/keys/custMpk.pem
