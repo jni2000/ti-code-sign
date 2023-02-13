@@ -1,0 +1,61 @@
+ [ req ]
+ distinguished_name     = req_distinguished_name
+ x509_extensions        = v3_ca
+ prompt                 = no
+ dirstring_type         = nobmp
+
+ [ req_distinguished_name ]
+ C                      = US
+ ST                     = TX
+ L                      = Dallas
+ O                      = Texas Instruments Incorporated
+ OU                     = Processors
+ CN                     = TI Support
+ emailAddress           = support@ti.com
+
+
+ [ v3_ca ]
+ basicConstraints = CA:true
+ 1.3.6.1.4.1.294.1.3=ASN1:SEQUENCE:swrv
+ 1.3.6.1.4.1.294.1.9=ASN1:SEQUENCE:ext_boot_info
+
+ [swrv]
+ swrv=INTEGER:SW_REV
+
+ [ext_boot_info]
+ extImgSize=INTEGER:TOTAL_IMAGE_LENGTH
+ numComp=INTEGER:NUM_COMPS_COUNT
+ sbl=SEQUENCE:sbl
+ sysfw=SEQUENCE:sysfw
+ sysfw_data=SEQUENCE:sysfw_data
+ SYSFW_INNER_CERT_EXT_BOOT_SEQUENCE_STRING
+ DM_DATA_EXT_BOOT_SEQUENCE_STRING
+
+ [sbl]
+ compType = INTEGER:1
+ bootCore = INTEGER:16
+ compOpts = INTEGER:0
+ destAddr = FORMAT:HEX,OCT:SBL_DEST_ADDR
+ compSize = INTEGER:SBL_IMAGE_SIZE
+ shaType  = OID:SBL_IMAGE_SHA_OID
+ shaValue = FORMAT:HEX,OCT:SBL_IMAGE_SHA_VAL
+
+ [sysfw]
+ compType = INTEGER:2
+ bootCore = INTEGER:0
+ compOpts = INTEGER:0
+ destAddr = FORMAT:HEX,OCT:SYSFW_DEST_ADDR
+ compSize = INTEGER:SYSFW_IMAGE_SIZE
+ shaType  = OID:SYSFW_IMAGE_SHA_OID
+ shaValue = FORMAT:HEX,OCT:SYSFW_IMAGE_SHA_VAL
+
+ [sysfw_data]
+ compType = INTEGER:18
+ bootCore = INTEGER:0
+ compOpts = INTEGER:0
+ destAddr = FORMAT:HEX,OCT:SYSFW_DATA_DEST_ADDR
+ compSize = INTEGER:SYSFW_DATA_IMAGE_SIZE
+ shaType  = OID:SYSFW_DATA_IMAGE_SHA_OID
+ shaValue = FORMAT:HEX,OCT:SYSFW_DATA_IMAGE_SHA_VAL
+ SYSFW_INNER_CERT_EXT_BOOT_BLOCK
+ DM_DATA_EXT_BOOT_BLOCK
