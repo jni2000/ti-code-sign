@@ -77,7 +77,7 @@ HS_SED_OPTS="-e s/TEST_IMAGE_LENGTH/${HS_IMAGE_SIZE}/ "
 HS_SED_OPTS+="-e s/TEST_IMAGE_SHA_VAL/${HS_SHA_VALUE}/ "
 HS_SED_OPTS+="-e s/TEST_SWRV/${HS_SWRV}/ "
 TMPX509=$(mktemp) || exit 1
-cat ${PREFIX}/scripts/x509-template.txt | sed ${HS_SED_OPTS} > ${TMPX509}
+cat ${PREFIX}/templates/x509-template.txt | sed ${HS_SED_OPTS} > ${TMPX509}
 
 # Generate x509 certificate
 TMPCERT=$(mktemp) || exit 1
