@@ -34,7 +34,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-function fn_display_usage {
+fn_display_usage() {
 	echo "Error: $1"
 	echo ""
 	echo "This script is used to secure a binary blob for the K3 platform."
