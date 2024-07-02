@@ -16,28 +16,11 @@ emailAddress           = support@ti.com
 [ v3_ca ]
 basicConstraints       = CA:true
 1.3.6.1.4.1.294.1.3    = ASN1:SEQUENCE:swrv
-1.3.6.1.4.1.294.1.4    = ASN1:SEQUENCE:swenc
-1.3.6.1.4.1.294.1.33   = ASN1:SEQUENCE:sysfw_boot
 1.3.6.1.4.1.294.1.34   = ASN1:SEQUENCE:sysfw_image_integrity
 1.3.6.1.4.1.294.1.35   = ASN1:SEQUENCE:sysfw_image_load
 
 [ swrv ]
 swrv = INTEGER:TEST_SWRV
-
-[ swenc ]
-initialVector          = FORMAT:HEX,OCT:TEST_SWENC_IV
-randomString           = FORMAT:HEX,OCT:TEST_SWENC_RS
-
-[ sysfw_boot ]
-bootCore               = INTEGER:TEST_BOOT_CORE
-configFlags_set        = INTEGER:TEST_BOOT_CFG_GLAGS_SET
-configFlags_clr        = INTEGER:TEST_BOOT_CFG_GLAGS_CLR
-resetVec               = FORMAT:HEX,OCT:TEST_BOOT_RESET_VEC
-fieldValid             = INTEGER:TEST_BOOT_FIELD_VALID
-rsvd1                  = INTEGER:TEST_BOOT_RSVD1
-rsvd2                  = INTEGER:TEST_BOOT_RSVD2
-rsvd3                  = INTEGER:TEST_BOOT_RSVD3
-
 
 [ sysfw_image_integrity ]
 shaType                = OID:2.16.840.1.101.3.4.2.3

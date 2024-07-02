@@ -72,14 +72,42 @@ HS_IMAGE_SIZE=$(cat $INPUT_FILE | wc -c)
 # Get software revision info
 HS_SWRV=$(cat ${PREFIX}/keys/swrv.txt)
 
+# Get software encryption info
+HS_SWENC_IV=$(cat ${PREFIX}/keys/swenciv.txt)
+HS_SWENC_RS=$(cat ${PREFIX}/keys/swencrs.txt)
+
+# Get software boot info
+HS_BOOT_CORE=$(cat ${PREFIX}/keys/sysbootcore.txt)
+HS_BOOT_CFG_FLAGS_SET=$(cat ${PREFIX}/keys/sysbootflgc.txt)
+HS_BOOT_CFG_FLAGS_CLR=$(cat ${PREFIX}/keys/sysbootflgs.txt)
+HS_BOOT_RESET_VEC=$(cat ${PREFIX}/keys/sysbootrv.txt)
+HS_BOOT_FIELD_VALID=$(cat ${PREFIX}/keys/sysbootrv.txt)
+HS_BOOT_RSVD1=$(cat ${PREFIX}/keys/sysbootrsvd1.txt)
+HS_BOOT_RSVD2=$(cat ${PREFIX}/keys/sysbootrsvd2.txt)
+HS_BOOT_RSVD3=$(cat ${PREFIX}/keys/sysbootrsvd3.txt)
+
+#echo ${HS_SWENC_RS}
+echo ${HS_SHA_VALUE}
+echo ${HS_SWENC_IV}
+
 # Parameters to get populated into the x509 template
 HS_SED_OPTS="-e s/TEST_IMAGE_LENGTH/${HS_IMAGE_SIZE}/ "
 HS_SED_OPTS+="-e s/TEST_IMAGE_SHA_VAL/${HS_SHA_VALUE}/ "
 HS_SED_OPTS+="-e s/TEST_SWRV/${HS_SWRV}/ "
+HS_SED_OPTS+="-e s/TEST_SWENC_IV/${HS_SWENC_IV}/ "
+HS_SED_OPTS+="-e s/TEST_SWENC_RS/${HS_SWENC_RS}/ "
+HS_SED_OPTS+="-e s/TEST_BOOT_CORE/${HS_BOOT_CORE}/ "
+HS_SED_OPTS+="-e s/TEST_BOOT_CFG_GLAGS_SET/${HS_BOOT_CFG_FLAGS_SET}/ "
+HS_SED_OPTS+="-e s/TEST_BOOT_CFG_GLAGS_CLR/${HS_BOOT_CFG_FLAGS_CLR}/ "
+HS_SED_OPTS+="-e s/TEST_BOOT_RESET_VEC/${HS_BOOT_RESET_VEC}/ "
+HS_SED_OPTS+="-e s/TEST_BOOT_FIELD_VALID/${HS_BOOT_FIELD_VALID}/ "
+HS_SED_OPTS+="-e s/TEST_BOOT_RSVD1/${HS_BOOT_RSVD1}/ "
+HS_SED_OPTS+="-e s/TEST_BOOT_RSVD2/${HS_BOOT_RSVD2}/ "
+HS_SED_OPTS+="-e s/TEST_BOOT_RSVD3/${HS_BOOT_RSVD3}/ "
 TMPX509=$(mktemp) || exit 1
 cat ${PREFIX}/templates/x509-template.txt | sed ${HS_SED_OPTS} > ${TMPX509}
 
-#echo ${HS_SED_OPTS}
+echo ${HS_SED_OPTS}
 
 # Generate x509 certificate
 TMPCERT=$(mktemp) || exit 1
@@ -91,3 +119,4 @@ cat ${TMPCERT} $INPUT_FILE > $OUTPUT_FILE
 
 # Cleanup
 rm -f ${TMPX509} ${TMPCERT}
+
